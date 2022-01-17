@@ -349,7 +349,21 @@ class configuration_vars {
    * if left blank, the incidents will be send out to the email addresses of the 
    * users if available. 
    */
-  public $incidents_email_list = ""; 
+  public $incidents_email_list = "";
+
+  /**
+   * CALENDARI
+   */
+
+  /**
+   * Llistat de uf's que no participen en la calendarització de torns (1,2,3...)
+   */
+  public $ufAnulades = array(1);
+
+  /**
+   * Ufs per torn, per defecte 2
+   */
+  public $ufsxTorn = 2;                
 
   /**
    * 

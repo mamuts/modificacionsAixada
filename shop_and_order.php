@@ -241,6 +241,20 @@
 				showAnim	: '',
 				beforeShowDay: function(date){		//activate only those dates that are available for ordering.
 					if (what == 'Order'){
+                        $.showMsg({
+                            <?php $balance = get_row_query('SELECT balance FROM aixada_account WHERE account_id='.(get_session_uf_id() + 1000).' ORDER BY id DESC LIMIT 1');
+                                  $dataActual = date("Ymd");
+                                  $torn = get_row_query('SELECT dataTorn FROM aixada_torns WHERE ufTorn='.(get_session_uf_id()).' AND dataTorn >='.$dataActual.' ORDER BY id ASC LIMIT 1');
+                                  if($torn == null){
+                                    $misTorn = " Sense torn assignat! ";  
+                                  }
+                                  else{
+                                    $ufTorn = get_row_query('SELECT ufTorn FROM aixada_torns WHERE dataTorn='.date('Ymd',strtotime($torn['dataTorn'])).' and ufTorn !='.(get_session_uf_id()).'');
+                                    $misTorn = "Tens torn el: ".date('d-m-Y',strtotime($torn['dataTorn']))." amb la Uf: ".$ufTorn['ufTorn']; 
+                                  }    
+                                  ?>
+	                        msg:"<?php echo "Actualment disposes de ".$balance['balance']."€ <br>".$misTorn;?>",
+		                    type: 'warning'});
 						var ymd = $.datepicker.formatDate('yy-mm-dd', date);
 						if ($.inArray(ymd, _availableDatepickerDates) == -1) {
 						    return [false,"","Unavailable"];
@@ -734,3 +748,4 @@
 <!-- / END -->
 </body>
 </html>
+	

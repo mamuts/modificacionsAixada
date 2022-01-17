@@ -76,8 +76,8 @@ $Text['head_ti_manage_uf'] = "Unitats familiars/Membres";
 $Text['head_ti_incidents'] = "Incidents";
 $Text['head_ti_stats'] = "Estadístiques diàries";
 $Text['head_ti_prev_orders'] = "Les meves compres anteriors"; 
-$Text['head_ti_cashbox'] = "Control de diners"; 
-
+$Text['head_ti_cashbox'] = "Control de diners";
+$Text['head_ti_calendar'] = "Gestiona el calendari de la cope";
 
 
 /**
@@ -109,7 +109,13 @@ $Text['ti_report_torn'] = "Resum del torn d'avui";
 //$Text['ti_mng_cashbox'] = "Caixa";
 
 
-
+/**
+ *              Ajuda
+ */
+$Text['compte_titol'] = 'Número de compte  on fer ingressos i NIF';
+$Text['llistatUfs_titol'] = 'Llistat Uf\'s actives';
+$Text['gestioTorns_titol'] = 'Gestió Torns Cistella';
+$Text['calendariProveidors_titol'] = 'Calendari de proveïdors';
 
 /**
  * 				roles
@@ -284,6 +290,12 @@ $Text['minStock'] = "Estoc mínim";
 $Text['stock'] = "Estoc";
 
 
+/**
+*       Torns Cistella
+*/
+$Text['dataTorn'] = "Data del torn";
+
+
 
 /**
  *              Shop and order
@@ -329,8 +341,10 @@ $Text['nav_wiz'] = "Torn";
   $Text['nav_wiz_torn'] = "Resum torn";
 	$Text['nav_wiz_cashbox'] = "Caixa";
 $Text['nav_shop'] = "Compra avui";
+$Text['nav_ajuda'] = "Ajuda";
 $Text['nav_order'] = "Propera comanda";
 $Text['nav_mng'] = "Gestiona";
+$Text['nav_mng_calendar'] = "Calendari";
 	//$Text['nav_mng_uf'] = "Unitats familiars";
 	$Text['nav_mng_member'] = "Membres";
 	$Text['nav_mng_providers'] = "Proveïdors";
@@ -512,7 +526,11 @@ $Text['prdcat_health'] 			= "Salut";		//paper del vàter, paper de cuina 1
 $Text['prdcat_misc']			= "Tota la resta..." ;
 
 
+/**
+ * Administració torns
+ */
 
+$Text['ti_mng_cal'] = 'Llistat de torns';
 
 
 /**

@@ -86,6 +86,7 @@
 		</li>
 		
 		<li><a href="manage_providers.php"><?php echo $Text['nav_mng_providers'];?></a></li>
+        <li><a href="manage_calendar.php"><?php echo $Text['nav_mng_calendar'];?></a></li>
 		<li><a href="manage_providers.php"><?php echo $Text['nav_mng_products'];?></a>
 			<ul>
 				<li><a href="manage_orderable_products.php"><?php echo $Text['nav_mng_deactivate'];?></a></li>
