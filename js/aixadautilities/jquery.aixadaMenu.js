@@ -2,7 +2,7 @@ $(function(){
 	
 	
 	$("#navHome").button();
-	
+    $("#navCompra").button();	
 	$("#navWizard").button();
 	$("#navShop").button();
 	$("#navOrder").button();
