@@ -38,6 +38,7 @@ class configuration_vars {
     public $coop_VAT_number = 'F9999999'; // CIF
     public $coop_address = 'Street...';
     public $coop_city = 'Zip City';
+    public $coop_bank = 'Compte banc';
     public $coop_contact_inf = 'email@bla.com<br>bla bla bla...'; // Use <br> to force line break
 
   

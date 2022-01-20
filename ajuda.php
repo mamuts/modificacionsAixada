@@ -1,4 +1,9 @@
-<?php include "php/inc/header.inc.php" ?>
+<?php 
+    include "php/inc/header.inc.php";
+    define('DS', DIRECTORY_SEPARATOR);
+    define('__ROOT__', dirname(dirname(dirname(__FILE__))).DS);  
+    require_once(__ROOT__ . "local_config/config.php");
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?=$language;?>" lang="<?=$language;?>">
 <head>
@@ -97,29 +102,28 @@ function guardarTorn(elem){
 	    </div>
 <div class="faq-item">
 <div class="ui-widget-content ui-corner-all aix-style-observer-widget">
-			<h3 class="ui-widget-header ui-corner-all" onclick="numCompte()"><span class="left-icons ui-icon ui-icon-triangle-1-e"></span><?php echo $Text['compte_titol']?><span class="loadAnim floatRight hidden"><img class="loadSpinner" src="img/ajax-loader-redmond.gif" style="display: none;"></span></h3>
+			<h3 class="ui-widget-header ui-corner-all" onclick="numCompte()"><span class="left-icons ui-icon ui-icon-triangle-1-e"></span><?php echo $Text['compte_titol'];?><span class="loadAnim floatRight hidden"><img class="loadSpinner" src="img/ajax-loader-redmond.gif" style="display: none;"></span></h3>
 			<div id="numCompteCope" class="tblListingDefault hidden" style="display: none;">
                 <p>            
-                    <b>Número de compte:</b> ES68 1491 0001 212162263129 </br>
+                    <b><?php echo $Text['numCompte'];?></b> <?php echo get_config('coop_bank');?></br>
                     <b>Important: </b>Recordeu a l'assumpte de la transferència afegir la UF que sou!
                 </p>
                 </br>
                 <p>
-                <b>Associació Saltioli</b>
+                <b><?php echo get_config('coop_name');?></b>
                 </p>
                 <p>
-                NIF: G-55239537 
+                <?php echo $Text['nif'].": ".get_config('coop_VAT_number');?>
                 </p>
                 </br>
                 <p>
-                <b>Local:</b></br>
-                Casal Saltenc Independentista  </br>
-                Carrer Llarg, 41,
+                <b><?php echo $Text['local'];?></b></br>
+                <?php echo get_config('coop_address');?>
     		</div>
 
 </div>
 <div class="ui-widget-content ui-corner-all aix-style-observer-widget">
-			<h3 class="ui-widget-header ui-corner-all" onclick="llistatUfs()"><span class="left-icons ui-icon ui-icon-triangle-1-e"></span><?php echo $Text['llistatUfs_titol']?><span class="loadAnim floatRight hidden"><img class="loadSpinner" src="img/ajax-loader-redmond.gif" style="display: none;"></span></h3>
+			<h3 class="ui-widget-header ui-corner-all" onclick="llistatUfs()"><span class="left-icons ui-icon ui-icon-triangle-1-e"></span><?php echo $Text['llistatUfs_titol'];?><span class="loadAnim floatRight hidden"><img class="loadSpinner" src="img/ajax-loader-redmond.gif" style="display: none;"></span></h3>
 			<div id="llistatUfsActives" class="tblListingDefault hidden" style="display: none;">
                 <table id="product_list_provider" class="product_list" >
 		       <thead>
@@ -140,8 +144,8 @@ function guardarTorn(elem){
                     <th><?php echo $Text['dataTorn']?></th>
                     <th><?php echo $Text['uf_short'];?></th>
 		    		<th><?php echo $Text['uf_long'];?></th>
-                    <th>Modificar Uf</th>
-                    <th>Guardar</th>
+                    <th><?php echo $Text['modificar'];?></th>
+                    <th><?php echo $Text['guardar'];?></th>
 					</tr>
 			</thead>
 			<tbody id="contenidorTorns">

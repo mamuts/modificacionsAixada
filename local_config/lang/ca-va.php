@@ -116,6 +116,11 @@ $Text['compte_titol'] = 'Número de compte  on fer ingressos i NIF';
 $Text['llistatUfs_titol'] = 'Llistat Uf\'s actives';
 $Text['gestioTorns_titol'] = 'Gestió Torns Cistella';
 $Text['calendariProveidors_titol'] = 'Calendari de proveïdors';
+$Text['guardar'] = 'Guardar';
+$Text['modificar'] = 'Modificar Uf';
+$Text['local'] = 'Local';
+$Text['nif'] = 'Nif';
+$Text['numCompte'] = 'Número de Compte';
 
 /**
  * 				roles
