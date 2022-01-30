@@ -136,8 +136,8 @@
                     }
                 }
             }
-?>
-            <h1>Roda de Torns Creada<?php echo $ultimaUf[0];?></h1>
+            ?>
+            <h1>Roda de Torns Creada</h1>
             <?php
             exit;
 
