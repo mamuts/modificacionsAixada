@@ -102,6 +102,8 @@
 		</li-->
 		<li><a href="manage_money.php"><?php echo $Text['nav_mng_money'];?></a>
 			<ul>
+                <li><a href="validate.php"><?php echo $Text['nav_wiz_validate'];?></a></li>
+				<li><a href="manage_money.php"><?php echo $Text['nav_wiz_cashbox'];?></a></li>
 				<li><a href="manage_data.php?table=aixada_account_desc"><?php echo $Text['nav_mng_accdec']; ?></a></li>
 				<li><a href="manage_data.php?table=aixada_payment_method"><?php echo $Text['nav_mng_paymeth']; ?></a></li>
 			</ul></li>

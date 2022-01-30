@@ -27,8 +27,7 @@
                     <tr>
                         <th><?php echo$ufTemp;?></th>
                         <th><?php echo $results["name"];?></th>
-                        <?php
-                        $rsllista = $db ->Execute('select id,name FROM aixada_uf WHERE active=:1q', 1);?>
+                        <?php $rsllista = $db ->Execute('select id,name FROM aixada_uf WHERE active=:1q', 1);?>
                         <th>
 	                    <select id="<?php echo $i;?>" name="ufs">
                         <option value="" name="ufSeleccionada">...</option>
@@ -118,22 +117,27 @@
         case 'crearRodaTorns':
             $db = DBWrap::get_instance();
             $rsBorrar = $db ->Execute('delete from aixada_torns where dataTorn >= :1q', $_POST['data']);
-            $rs = $db ->Execute('select id,name FROM aixada_uf WHERE active=:1q', 1);
+            $rs = $db ->Execute('select id FROM aixada_uf WHERE active=:1q', 1);
+            $ultimaUf = get_row_query('select MAX(id) FROM aixada_uf WHERE active=1');
             $dataInici = date("Y-m-d", strtotime($_POST['data']));
             $uf=0;
             while($row = $rs->fetch_assoc()) 
             {
                 if(ufsAnulada($row['id'])){
                     $ufId = $row['id'];
-                    $db->Execute('insert into aixada_torns (dataTorn,ufTorn) values (:1q,:2q)', $dataInici, $ufId);
-                    $uf++;
-                    if($uf>=get_config('ufsxTorn')){               
+                    if($uf>=get_config('ufsxTorn') && $ufId != $ultimaUf[0]){
                         $dataInici = date("Y-m-d",strtotime($dataInici."+ 1 week"));
-                        $uf=0;
+                        $db->Execute('insert into aixada_torns (dataTorn,ufTorn) values (:1q,:2q)', $dataInici, $ufId);               
+                        $uf=1;
+                    }
+                    else{
+                        $db->Execute('insert into aixada_torns (dataTorn,ufTorn) values (:1q,:2q)', $dataInici, $ufId);               
+                        $uf++;
                     }
                 }
-            }?>
-            <h1>Roda de Torns Creada</h1>
+            }
+?>
+            <h1>Roda de Torns Creada<?php echo $ultimaUf[0];?></h1>
             <?php
             exit;
 
