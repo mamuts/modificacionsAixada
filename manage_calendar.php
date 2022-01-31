@@ -90,7 +90,7 @@
             url: 'php/ctrl/Calendar.php',
             type: 'post',
             success: function(response){
-                $('#contenidorTorn').html(response);
+                $('#contenidorTorn').html("<h1><?php echo $Text['torn_guardat'];?>"+response+"</h1>");
                 }   
         });
         let parametresCalendari = {
@@ -143,7 +143,7 @@
                     url:   'php/ctrl/Calendar.php',
                     type:  'post',
                     success:  function (response) {
-                        $('#contenidorTorn').html(response);
+                        $('#contenidorTorn').html("<h1>"+response+"<?php echo $Text['torn_eliminat'];?></h1>");
                     }
             });
             let parametresCalendari = {
@@ -186,7 +186,7 @@
         url: 'php/ctrl/Calendar.php',
         type: 'post',
         success:  function (response) {
-           $('#contenidorTorn').html(response);
+           $('#contenidorTorn').html("<h1><?php echo $Text['torn_creat'];?>"+response+"</h1>");
         }
     });
     let parametresCalendari = {
@@ -220,7 +220,7 @@
                 url: 'php/ctrl/Calendar.php',
                 type: 'post',
                 success:  function (response) {
-                   $('#contenidorTorn').html(response);
+                   $('#contenidorTorn').html("<h1><?php echo $Text['roda_torns_creada'];?></h1>");
                 }
             });
             let parametresCalendari = {

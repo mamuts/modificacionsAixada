@@ -123,6 +123,14 @@ $Text['nif'] = 'Nif';
 $Text['numCompte'] = 'Número de Compte';
 
 /**
+ *              Calendari
+ */
+$Text['torn_creat'] = 'Torn creat';
+$Text['torn_guardat'] = 'Torn guardat';
+$Text['roda_torns_creada'] = 'Roda de Torns Creada';
+$Text['torn_eliminat'] = 'Torn eliminat';
+
+/**
  * 				roles
  */
 $Text['Consumer'] = 'Consumidor';
