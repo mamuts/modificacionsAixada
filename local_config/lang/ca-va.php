@@ -129,6 +129,8 @@ $Text['torn_creat'] = 'Torn creat';
 $Text['torn_guardat'] = 'Torn guardat';
 $Text['roda_torns_creada'] = 'Roda de Torns Creada';
 $Text['torn_eliminat'] = 'Torn eliminat';
+$Text['data_torn'] = "Data del torn";
+$Text['assignar_torn'] = "Assignar torn";
 
 /**
  * 				roles
@@ -301,13 +303,6 @@ $Text['negativeStock']="Productes amb estoc negatiu";
 $Text['curStock'] = "Estoc actual";
 $Text['minStock'] = "Estoc mínim";
 $Text['stock'] = "Estoc";
-
-
-/**
-*       Torns Cistella
-*/
-$Text['dataTorn'] = "Data del torn";
-
 
 
 /**

@@ -67,8 +67,12 @@
         url: 'php/ctrl/Calendar.php',
         type: 'post',
         success: function(response){
-            $('#contenidorTorn').html(response);
-            }   
+            let html = '<table>'+
+                '<thead>'+
+                '<tr><th colspan="4"><h1>Torn ' + dataTorn + '</h1></th></tr>'+
+                '<tr><th><?php echo $Text['uf_short']?></th><th><?php echo $Text['uf_long']?></th><th><?php echo $Text['assignar_torn']?></th><th><?php echo $Text['guardar']?></th></tr>' + response + '</thead></table>';            
+                $('#contenidorTorn').html(html);
+        }   
     });
  }
 
@@ -90,7 +94,8 @@
             url: 'php/ctrl/Calendar.php',
             type: 'post',
             success: function(response){
-                $('#contenidorTorn').html("<h1><?php echo $Text['torn_guardat'];?>"+response+"</h1>");
+                let dataGuardar = dadesSel.split(' ');
+                $('#contenidorTorn').html("<h1><?php echo $Text['torn_guardat'];?> ("+idData+")</h1>");
                 }   
         });
         let parametresCalendari = {
@@ -122,7 +127,9 @@
         url: 'php/ctrl/Calendar.php',
         type: 'post',
         success: function(response){
-            $('#contenidorTorn').html(response);
+            let html = '<table>'+
+                '<tr><th COLSPAN="2"><h1>Crear Torn <?= $dataTorn?></h1></th></tr>'+response;
+            $('#contenidorTorn').html(html);
             }   
     });
  }
@@ -143,7 +150,7 @@
                     url:   'php/ctrl/Calendar.php',
                     type:  'post',
                     success:  function (response) {
-                        $('#contenidorTorn').html("<h1>"+response+"<?php echo $Text['torn_eliminat'];?></h1>");
+                        $('#contenidorTorn').html("<h1><?php echo $Text['torn_eliminat'];?> ("+idData+")</h1>");
                     }
             });
             let parametresCalendari = {
@@ -186,7 +193,7 @@
         url: 'php/ctrl/Calendar.php',
         type: 'post',
         success:  function (response) {
-           $('#contenidorTorn').html("<h1><?php echo $Text['torn_creat'];?>"+response+"</h1>");
+           $('#contenidorTorn').html("<h1><?php echo $Text['torn_creat'];?> "+idData+"</h1>");
         }
     });
     let parametresCalendari = {

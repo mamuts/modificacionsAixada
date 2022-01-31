@@ -14,17 +14,12 @@
             $dataR = $a[2].'-'.$a[1].'-'.$a[0];
             $dataY = date("Y-m-d", strtotime($dataR));
             $db = DBWrap::get_instance();
-            $rs = $db->Execute('select * from aixada_torns where dataTorn=:1q', $dataY);?>
-            <table>
-                <thead>
-                <tr><th colspan="4"><h1>Torn <?php echo $_POST['data']?></h1></th></tr>
-                <tr><th>UF:</th><th>Unitat familiar</th><th>Assignar Torn:</th><th>Guardar</th></tr>
-                <?php
-                while($row = $rs->fetch_assoc()){
-                    $ufTemp = $row['ufTorn'];
-                    $rsUf = $db->Execute('select * from aixada_uf where id=:1q', $ufTemp);
-                    $results = $rsUf -> fetch_array();?>
-                    <tr>
+            $rs = $db->Execute('select * from aixada_torns where dataTorn=:1q', $dataY);
+            while($row = $rs->fetch_assoc()){
+                $ufTemp = $row['ufTorn'];
+                $rsUf = $db->Execute('select * from aixada_uf where id=:1q', $ufTemp);
+                $results = $rsUf -> fetch_array();?>
+                <tr>
                         <th><?php echo$ufTemp;?></th>
                         <th><?php echo $results["name"];?></th>
                         <?php $rsllista = $db ->Execute('select id,name FROM aixada_uf WHERE active=:1q', 1);?>
@@ -46,16 +41,10 @@
                     </tr>
                 <?php
                 $i++;
-                }?>
-                </thead>
-            </table>
-            <?php
+                }
             exit;
 
-        case 'printCrearTorns':?>
-            <table>
-                <tr><th COLSPAN="2"><h1>Crear Torn <?= $dataTorn?></h1></th></tr>
-                <?php
+        case 'printCrearTorns':
                 $db = DBWrap::get_instance();
                 $rs = $db ->Execute('select id,name FROM aixada_uf WHERE active=:1q', 1);
                 $llistat = $rs -> fetch_all();         
@@ -94,7 +83,6 @@
             $db = DBWrap::get_instance();
             $db->Execute('insert into aixada_torns (dataTorn, ufTorn) values (:1q,:2q)', $_POST['data'], $_POST['uf1']);
             $db->Execute('insert into aixada_torns (dataTorn, ufTorn) values (:1q,:2q)', $_POST['data'], $_POST['uf2']);
-            echo date("d-m-Y", strtotime($_POST['data']));
             exit;
 
         case 'guardarTornUsuari';
@@ -110,7 +98,6 @@
         	$dades = explode(" ", $ufSel, 3);
             $db = DBWrap::get_instance();
             $db->Execute('update aixada_torns set ufTorn = :1q where ufTorn = :2q and dataTorn= :3q limit 1', $dades[0], $dades[1], $dades[2]);
-            echo date("d-m-Y", strtotime($dades[2]));           
             exit;
 
         case 'crearRodaTorns':
@@ -140,7 +127,6 @@
         case 'eliminarTorn':
 	        $db = DBWrap::get_instance();
             $db->Execute('delete from aixada_torns where dataTorn=:1q', $_POST['data']);
-            echo $_POST['data'];
             exit;
 
         case 'mesAnterior':
