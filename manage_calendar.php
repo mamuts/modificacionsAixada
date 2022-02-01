@@ -56,21 +56,39 @@
  }
 
  /*Funció per mostrar un Torn selecionat*/
- function printTorn(dataTorn){
+ function printTorn(dataTorn){    
+
     let parametres = {
         oper : "printTorn",
         data : dataTorn
     };
-    document.getElementById("contenidorTorn").style.display = "block"; 
+
+    document.getElementById("contenidorTorn").style.display = "block";
+
     $.ajax({
         data: parametres,
         url: 'php/ctrl/Calendar.php',
         type: 'post',
+        dataType: "JSON",
         success: function(response){
             let html = '<table>'+
                 '<thead>'+
-                '<tr><th colspan="4"><h1>Torn ' + dataTorn + '</h1></th></tr>'+
-                '<tr><th><?php echo $Text['uf_short']?></th><th><?php echo $Text['uf_long']?></th><th><?php echo $Text['assignar_torn']?></th><th><?php echo $Text['guardar']?></th></tr>' + response + '</thead></table>';            
+                '<tr><th colspan="4"><h1><?php echo $Text['nav_wiz'];?> ' + dataTorn + '</h1></th></tr>'+
+                '<tr><th><?php echo $Text['uf_short']?></th><th><?php echo $Text['uf_long']?></th><th><?php echo $Text['assignar_torn']?></th><th><?php echo $Text['guardar']?></th></tr>'; 
+            for(let i=0; i<response[0].length; i++){
+                html += '<tr>'+
+                        '<th>' + response[0][i].id + '</th>'+
+                        '<th>' + response[0][i].name + '</th>'+
+                        '<th><select id="' + i + '" name="ufs">'+
+                            '<option value="" name="ufSeleccionada">...</option>';
+                         for(let x=0; x<response[1].length; x++){
+                            html += '<option value="'+response[1][x].id+' '+response[0][i].id+' '+response[0][i].dataTorn+'" name="ufSeleccionada">' + response[1][x].nomSelect +'</option>';
+                         }
+                        html += '</select></th>'+
+                            '<th><button class="aix-layout-fixW150" id="btnGuardar" onclick="guardarTorn('+i+')"><?php echo $Text['guardar']?></button></th>'+
+                            '</tr>';
+            }                
+                html += '</thead></table>';          
                 $('#contenidorTorn').html(html);
         }   
     });
@@ -81,7 +99,7 @@
     let dadesSel = document.getElementById(elem).value;
     if(dadesSel=== ""){
         $.showMsg({
-            msg:"Cap Uf seleccionada",
+            msg:"<?php echo $Text['no_uf'];?>",
 		    type: 'atencio'});
     }
     else{
@@ -128,7 +146,7 @@
         type: 'post',
         success: function(response){
             let html = '<table>'+
-                '<tr><th COLSPAN="2"><h1>Crear Torn <?= $dataTorn?></h1></th></tr>'+response;
+                '<tr><th COLSPAN="2"><h1><?php echo $Text['crear_torn'];?></h1></th></tr>'+response;
             $('#contenidorTorn').html(html);
             }   
     });
@@ -298,8 +316,6 @@
 </head>
 <body>
 <?php
-$dataTorns = array();
-
 # Definim valors inicials per al calendari
 
     $month=date("n");
@@ -324,9 +340,9 @@ $dataTorns = array();
 </table>
 <div id=contenidorTorn></div>
 <br>
-<button class="aix-layout-fixW150" id="btnEliminar" disabled="disabled" onclick="eliminarTorn()">Eliminar</button>
-<button class="aix-layout-fixW150" id="btnCrear" disabled="disabled" onclick="crearTorn()">Crear torn</button>
-<button class="aix-layout-fixW150" id="btnRoda" disabled="disabled" onclick="crearRodaTorns()">Crear roda de torns</button>
+<button class="aix-layout-fixW150" id="btnEliminar" disabled="disabled" onclick="eliminarTorn()"><?php echo $Text['eliminar_torn'];?></button>
+<button class="aix-layout-fixW150" id="btnCrear" disabled="disabled" onclick="crearTorn()"><?php echo $Text['crear_torn'];?></button>
+<button class="aix-layout-fixW150" id="btnRoda" disabled="disabled" onclick="crearRodaTorns()"><?php echo $Text['crear_roda'];?></button>
 	</div>
     
 	<!-- end of stage wrap -->
@@ -335,4 +351,3 @@ $dataTorns = array();
 <!-- / END -->
 </body>
 </html>
-	

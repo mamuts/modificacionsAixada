@@ -8,40 +8,21 @@
   
     switch ($_POST['oper']) {      
         case 'printTorn':
-            global $dataTorns;
-            $i=0;
             $a = explode('-',$_POST['data']);
-            $dataR = $a[2].'-'.$a[1].'-'.$a[0];
-            $dataY = date("Y-m-d", strtotime($dataR));
             $db = DBWrap::get_instance();
-            $rs = $db->Execute('select * from aixada_torns where dataTorn=:1q', $dataY);
+            $rs = $db->Execute('select ufTorn from aixada_torns where dataTorn=:1q', date("Y-m-d", strtotime($a[2].'-'.$a[1].'-'.$a[0])));
             while($row = $rs->fetch_assoc()){
-                $ufTemp = $row['ufTorn'];
-                $rsUf = $db->Execute('select * from aixada_uf where id=:1q', $ufTemp);
-                $results = $rsUf -> fetch_array();?>
-                <tr>
-                        <th><?php echo$ufTemp;?></th>
-                        <th><?php echo $results["name"];?></th>
-                        <?php $rsllista = $db ->Execute('select id,name FROM aixada_uf WHERE active=:1q', 1);?>
-                        <th>
-	                    <select id="<?php echo $i;?>" name="ufs">
-                        <option value="" name="ufSeleccionada">...</option>
-                        <?php
-                        while($rowuf = $rsllista->fetch_assoc()){ 
-    	                    if(ufsAnulada($rowuf['id'])){
-                            $nomSelect=$rowuf['id']." - ".$rowuf['name'];?>
-                            <option value="<?php echo $rowuf['id']." ".$ufTemp." ".$dataY?>" name="ufSeleccionada"><?php echo $nomSelect ?></option>
-                            <?php
-       	                    }
-                        }
-                        ?>             
-                        </select>
-                        </th>
-                        <th><button class="aix-layout-fixW150" id="btnGuardar" onclick="guardarTorn(<?php echo $i;?>)">Guardar</button></th>
-                    </tr>
-                <?php
-                $i++;
+                $rsUf = $db->Execute('select id,name from aixada_uf where id=:1q', $row['ufTorn']);
+                $results = $rsUf -> fetch_array();
+                $data[] = array('id'=>$results["id"], 'name'=>$results["name"], 'dataTorn'=>date("Y-m-d", strtotime($a[2].'-'.$a[1].'-'.$a[0])));
+            }
+            $rsllista = $db ->Execute('select id,name FROM aixada_uf WHERE active=:1q', 1);
+            while($rowuf = $rsllista->fetch_assoc()){ 
+    	        if(ufsAnulada($rowuf['id'])){
+                    $data2[] = array('id'=>$rowuf['id'], 'nomSelect'=>$rowuf['id']." - ".$rowuf['name']);                       
                 }
+            }
+            echo json_encode(array($data,$data2));
             exit;
 
         case 'printCrearTorns':
@@ -86,8 +67,7 @@
             exit;
 
         case 'guardarTornUsuari';
-            $ufSel = $_POST['dades'];
-        	$dades = explode(" ", $ufSel, 3);
+        	$dades = explode(" ", $_POST['dades'], 3);
             $db = DBWrap::get_instance();
             $db->Execute('update aixada_torns set ufTorn = :1q where ufTorn = :2q and dataTorn= :3q limit 1', $dades[0], $dades[1], $dades[2]);
             llistartorns();           
@@ -153,6 +133,5 @@
     }
     return $resultat;
  }
-
 ?>
 

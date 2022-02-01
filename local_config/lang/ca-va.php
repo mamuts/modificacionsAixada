@@ -131,6 +131,10 @@ $Text['roda_torns_creada'] = 'Roda de Torns Creada';
 $Text['torn_eliminat'] = 'Torn eliminat';
 $Text['data_torn'] = "Data del torn";
 $Text['assignar_torn'] = "Assignar torn";
+$Text['no_uf'] = "Cap uf seleccionada";
+$Text['crear_torn'] = "Crear torn";
+$Text['crear_roda'] = "Crear roda de torns";
+$Text['eliminar_torn'] = "Eliminar torn";
 
 /**
  * 				roles
