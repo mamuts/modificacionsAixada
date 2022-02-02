@@ -4,7 +4,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title><?php echo $Text['global_title'] . " - " /*.  $Text['head_ti_'.strtolower($_REQUEST['what'])]*/; ?></title>
-
 	<link rel="stylesheet" type="text/css"   media="screen" href="css/aixada_main.css" />
   	<link rel="stylesheet" type="text/css"   media="print"  href="css/print.css" />
   	<link rel="stylesheet" type="text/css"   media="screen" href="js/aixadacart/aixadacart.css?v=<?=aixada_js_version();?>" />
@@ -144,9 +143,21 @@
         data: parametres,
         url: 'php/ctrl/Calendar.php',
         type: 'post',
+        dataType: "JSON",
         success: function(response){
             let html = '<table>'+
-                '<tr><th COLSPAN="2"><h1><?php echo $Text['crear_torn'];?></h1></th></tr>'+response;
+                '<tr><th COLSPAN="2"><h1><?php echo $Text['crear_torn'];?></h1></th></tr>';
+            for(let i=0;i < <?php echo get_config('ufsxTorn');?>;i++){
+                html += '<tr>'+
+                    '<th><?echo $Text['uf_short'];?> '+ i +':</th>'+
+                    '<th><select id="uf'+i+'" name="ufTorn'+i+'">';
+                    for(let x=0;x<response.length;x++){
+                        html += '<option value="'+response[x].id+'" name="ufSeleccionada">'+response[x].nomSelect+'</option>';
+                    }
+                html+='</select></th>'+
+                '</tr>';
+            }
+            html +='</table>';
             $('#contenidorTorn').html(html);
             }   
     });
@@ -195,16 +206,17 @@
 
  /* Funció per crear un Torn */
  function crearTorn(){
-    
-    var selectUf1 = document.getElementById("uf1").value;
-    var selectUf2 = document.getElementById("uf2").value;
+
+    let ufsArray = [];   
+    for(let i=0;i< <?echo get_config('ufsxTorn');?>;i++){
+        ufsArray[i] = document.getElementById("uf"+i).value;    
+    }
 
     let dataTorn = idData.split("-").reverse().join("-");
     let parametres = {
         oper : "crearTorn",
         data : dataTorn,
-        uf1 : selectUf1,
-        uf2 : selectUf2
+        ufs : {'array': JSON.stringify(ufsArray)}
     };
     $.ajax({
         data: parametres,

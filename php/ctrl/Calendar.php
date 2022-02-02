@@ -28,42 +28,20 @@
         case 'printCrearTorns':
                 $db = DBWrap::get_instance();
                 $rs = $db ->Execute('select id,name FROM aixada_uf WHERE active=:1q', 1);
-                $llistat = $rs -> fetch_all();         
-                ?>
-                <tr>
-                    <th>Uf 1: </th>
-                    <th><select id="uf1" name="ufTorn1">
-                    <?php
-                    foreach($llistat as $objecte) {
-                        if(ufsAnulada($objecte[0])){
-                      		$nomSelect=$objecte[0]." - ".$objecte[1];?>
-                            <option value="<?php echo $objecte[0]?>" name="ufSeleccionada1"><?php echo $nomSelect ?></option>
-                        <?php
-                        }     	
-                    }?>
-                    </select></th>
-                </tr>
-                <tr>
-                    <th>Uf 2: </th>
-                    <th><select id="uf2" name="ufTorn2">
-                    <?php
-                    foreach($llistat as $objecte) {
-                        if(ufsAnulada($objecte[0])){
-                      		$nomSelect=$objecte[0]." - ".$objecte[1];?>
-                            <option value="<?php echo $objecte[0]?>" name="ufSeleccionada2"><?php echo $nomSelect?></option>
-                        <?php
-                        }
-                    }?>
-                    </select></th>
-                </tr>
-            </table>
-            <?php
+                $rsllista = $db ->Execute('select id,name FROM aixada_uf WHERE active=:1q', 1);
+                while($rowuf = $rsllista->fetch_assoc()){ 
+    	            if(ufsAnulada($rowuf['id'])){
+                        $data[] = array('id'=>$rowuf['id'], 'nomSelect'=>$rowuf['id']." - ".$rowuf['name']);                       
+                    }
+                }
+                echo json_encode($data);
             exit;
 
         case 'crearTorn':
             $db = DBWrap::get_instance();
-            $db->Execute('insert into aixada_torns (dataTorn, ufTorn) values (:1q,:2q)', $_POST['data'], $_POST['uf1']);
-            $db->Execute('insert into aixada_torns (dataTorn, ufTorn) values (:1q,:2q)', $_POST['data'], $_POST['uf2']);
+            $data = json_decode($_POST['array']);
+            $db->Execute('insert into aixada_torns (dataTorn, ufTorn) values (:1q,:2q)', $_POST['data'], $data[0]);
+            $db->Execute('insert into aixada_torns (dataTorn, ufTorn) values (:1q,:2q)', $_POST['data'], $data[1]);
             exit;
 
         case 'guardarTornUsuari';
