@@ -149,7 +149,7 @@
                 '<tr><th COLSPAN="2"><h1><?php echo $Text['crear_torn'];?></h1></th></tr>';
             for(let i=0;i < <?php echo get_config('ufsxTorn');?>;i++){
                 html += '<tr>'+
-                    '<th><?echo $Text['uf_short'];?> '+ i +':</th>'+
+                    '<th><?echo $Text['uf_short'];?>:</th>'+
                     '<th><select id="uf'+i+'" name="ufTorn'+i+'">';
                     for(let x=0;x<response.length;x++){
                         html += '<option value="'+response[x].id+'" name="ufSeleccionada">'+response[x].nomSelect+'</option>';
@@ -166,7 +166,7 @@
  /* Funció per eliminar un Torn seleccionat */
  function eliminarTorn() {
    $.showMsg({
-        msg: "Estàs segur d'eliminar el torn amb data: "+idData,
+        msg: "<?php echo $Text['pregunta_eliminar'];?>"+idData,
         buttons: {
 		"<?=$Text['btn_ok'];?>":function(){
             let dataTorn = idData.split("-").reverse().join("-");
@@ -216,7 +216,7 @@
     let parametres = {
         oper : "crearTorn",
         data : dataTorn,
-        ufs : {'array': JSON.stringify(ufsArray)}
+        ufs : JSON.stringify(ufsArray)
     };
     $.ajax({
         data: parametres,
@@ -244,7 +244,7 @@
  /* Funció per crear roda de Torns */
  function crearRodaTorns(){
     $.showMsg({
-        msg: "Estàs segur de crear una roda de torns a partir de la data: "+idData+" Tots els torns posteriors seran eliminats",
+        msg: "<?php echo $Text['pregunta_roda'];?>"+idData+"<?php echo $Text['pregunta_roda2'];?>",
         buttons: {
 		"<?=$Text['btn_ok'];?>":function(){
             let dataTorn = idData.split("-").reverse().join("-");

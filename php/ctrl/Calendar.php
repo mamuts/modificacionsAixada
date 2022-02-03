@@ -39,9 +39,10 @@
 
         case 'crearTorn':
             $db = DBWrap::get_instance();
-            $data = json_decode($_POST['array']);
-            $db->Execute('insert into aixada_torns (dataTorn, ufTorn) values (:1q,:2q)', $_POST['data'], $data[0]);
-            $db->Execute('insert into aixada_torns (dataTorn, ufTorn) values (:1q,:2q)', $_POST['data'], $data[1]);
+            $data = json_decode($_POST['ufs']);
+            for($i=0;$i<count($data);$i++){
+                $db->Execute('insert into aixada_torns (dataTorn, ufTorn) values (:1q,:2q)', $_POST['data'], $data[$i]);
+            }
             exit;
 
         case 'guardarTornUsuari';

@@ -135,6 +135,9 @@ $Text['no_uf'] = "Cap uf seleccionada";
 $Text['crear_torn'] = "Crear torn";
 $Text['crear_roda'] = "Crear roda de torns";
 $Text['eliminar_torn'] = "Eliminar torn";
+$Text['pregunta_eliminar'] = "Estàs segur d'eliminar el torn amb data: ";
+$Text['pregunta_roda'] ="Estàs segur de crear una roda de torns a partir de la data: ";
+$Text['pregunta_roda2'] = " Tots els torns posteriors seran eliminats";
 
 /**
  * 				roles
