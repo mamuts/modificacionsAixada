@@ -56,7 +56,12 @@
             $ufSel = $_POST['dades'];
         	$dades = explode(" ", $ufSel, 3);
             $db = DBWrap::get_instance();
-            $db->Execute('update aixada_torns set ufTorn = :1q where ufTorn = :2q and dataTorn= :3q limit 1', $dades[0], $dades[1], $dades[2]);
+            if($dades[1]==0){
+                $db->Execute('insert into aixada_torns (dataTorn, ufTorn) values (:1q,:2q)', $dades[2], $dades[0]);
+            }            
+            else{
+                $db->Execute('update aixada_torns set ufTorn = :1q where ufTorn = :2q and dataTorn= :3q limit 1', $dades[0], $dades[1], $dades[2]);                
+            }            
             exit;
 
         case 'crearRodaTorns':
@@ -93,7 +98,7 @@
             }
             exit;
 
-        case 'mesAnterior':
+        case 'mesCalendari':
             printCalendar($_POST['mes'], $_POST['any']);
             exit;
 

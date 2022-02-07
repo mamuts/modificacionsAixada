@@ -93,10 +93,10 @@
                     '<th><select id="'+response[0].length+'" name="ufs">'+
                     '<option value="" name="ufSeleccionada">...</option>';
                     for(let x=0; x<response[1].length; x++){
-                       html += '<option value="'+response[1][x].id+' '+response[0][0].dataTorn+'" name="ufSeleccionada">' + response[1][x].nomSelect +'</option>';
+                       html += '<option value="'+response[1][x].id+' 0 '+response[0][0].dataTorn+'" name="ufSeleccionada">' + response[1][x].nomSelect +'</option>';
                     }
             html+= '</select></th>'+
-                   '<th><button class="aix-layout-fixW150" id="btnGuardar" onclick="guardarTorn()"><?php echo $Text['afegir_uf']?></button></th>'+
+                   '<th><button class="aix-layout-fixW150" id="btnGuardar" onclick="guardarTorn('+response[0].length+')"><?php echo $Text['afegir_uf']?></button></th>'+
                    '<th></th>'+ 
                    '</thead></table>';          
             $('#contenidorTorn').html(html);
@@ -200,13 +200,13 @@
                 any : dataTorn.split("-")[0],
             };
             $.ajax({
-                    data:  parametresCalendari,
-                    url:   'php/ctrl/Calendar.php',
-                    type:  'post',
-                    success:  function (response) {
-                        $('#contenidorCalendari').html(response);
-                    }
-            });						
+                data:  parametresCalendari,
+                url:   'php/ctrl/Calendar.php',
+                type:  'post',
+                success:  function (response) {
+                    $('#contenidorCalendari').html(response);
+                }
+            });			
 			$(this).dialog("close");
 		},
 		"<?=$Text['btn_cancel'];?>" : function(){
@@ -294,48 +294,43 @@
 	type: 'confirm'});
  }
 
- /*Funció per carregar un mes anterior */
- function mesAnterior(month, year){
-    if(month-1==0){month=12;year--;}
-    else {month = month-1;}
+ /*Funció per carregar mesos calendari */
+ function mesCalendari(month, year, pos){
+    if(pos==0){
+        if(month-1==0){month=12;year--;}
+        else {month = month-1;}
+    }
+    else{
+        if(month+1==13){month=1;year++;}
+        else {month = month+1;}
+    }
     let parametres = {
-            oper : "mesAnterior",
+            oper : "mesCalendari",
             mes : month,
             any : year,
-        };
+        };    
      document.getElementById("contenidorTorn").style.display = "none"; 
      $.ajax({
             data: parametres,
             url: 'php/ctrl/Calendar.php',
             type: 'post',
             success:  function (response) {
-               $('#contenidorCalendari').html(response);
+                let mesos = ['','Gener', 'Febrer', 'Març', 'Abril', 'Maig', 'Juny', 'Juliol', 'Agost', 'Setembre', 'Octubre', 'Novembre', 'Desembre'];
+                let html = '<table>'+
+                '<tr>'+
+                '<th><button class="aix-layout-fixW150" id="btnMesAnterior" onclick="mesCalendari('+month+','+year+',0)">&lt;&lt;&lt;</button></th>'+
+                '<th COLSPAN="5"><h1>'+mesos[month]+' '+year+'</h1></th>'+
+                '<th><button class="aix-layout-fixW150" id="btnMesPosterior" onclick="mesCalendari('+month+','+year+',1)">>>></button></th>'+
+                '</tr>'+
+            	'<tr>'+
+        		'<th>Dilluns</th><th>Dimarts</th><th>Dimecres</th><th>Dijous</th><th>Divendres</th><th>Dissabte</th><th>Diumenge</th>'+
+                '</tr>'+
+                 '<tr>'+response;
+               $('#contenidorCalendari').html(html);
             }
         });
     idData = null;
  }
-
-/*Funció per carregar un mes posterior */
- function mesPosterior(month, year){
-    if(month+1==13){month=1;year++;}
-    else {month = month+1;}
-    let parametres = {
-            oper : "mesAnterior",
-            mes : month,
-            any : year,
-        };
-     document.getElementById("contenidorTorn").style.display = "none";
-     $.ajax({
-            data: parametres,
-            url: 'php/ctrl/Calendar.php',
-            type: 'post',
-            success:  function (response) {
-               $('#contenidorCalendari').html(response);
-            }
-        });
-    idData = null;
- }
-
 </script>
 </head>
 <body>
@@ -345,7 +340,6 @@
     $month=date("n");
     $year=date("Y");
     $diaActual=date("j");
-
 ?>
 <div id="wrap">
 	<div>
@@ -358,10 +352,19 @@
 		    </div>		
 	    </div>
     <table id=contenidorCalendari class="product_list">
+        <tr>
+            <th><button class="aix-layout-fixW150" id="btnMesAnterior" onclick="mesCalendari(<?php echo $month;?>, <?php echo $year;?>, 0)">&lt;&lt;&lt;</button></th>
+            <th COLSPAN="5"><h1><?php echo $mesos[$month]." ".$year?></h1></th>
+            <th><button class="aix-layout-fixW150" id="btnMesPosterior" onclick="mesCalendari(<?php echo $month?>,<?php echo $year?>, 1)">>>></button></th>
+        </tr>
+        <tr>
+            <th>Dilluns</th><th>Dimarts</th><th>Dimecres</th><th>Dijous</th><th>Divendres</th><th>Dissabte</th><th>Diumenge</th>
+	    </tr>
+        <tr>
         <?php
 		printCalendar($month, $year);
 	    ?>
-</table>
+    </table>
 <div id=contenidorTorn></div>
 <br>
 <button class="aix-layout-fixW150" id="btnEliminar" disabled="disabled" onclick="eliminarTorn()"><?php echo $Text['eliminar_torn'];?></button>

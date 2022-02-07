@@ -5,18 +5,6 @@ require_once(__ROOT__ . "local_config/config.php");
    
 //Funció per imprimir el calendari
  function printCalendar($month, $year){
-    $mesos=[1=>"Gener", "Febrer", "Març", "Abril", "Maig", "Juny", "Juliol", "Agost", "Setembre", "Octubre", "Novembre", "Desembre"];
-    ?>
-    <tr>
-        <th><button class="aix-layout-fixW150" id="btnMesAnterior" onclick="mesAnterior(<?php echo $month;?>, <?php echo $year?>)">&lt;&lt;&lt;</button></th>
-        <th COLSPAN="5"><h1><?php echo $mesos[$month]." ".$year?></h1></th>        
-        <th><button class="aix-layout-fixW150" id="btnMesPosterior" onclick="mesPosterior(<?php echo $month;?>, <?php echo $year?>)">>>></button></th>
-    </tr>
-	<tr>
-		<th>Dilluns</th><th>Dimarts</th><th>Dimecres</th><th>Dijous</th><th>Divendres</th><th>Dissabte</th><th>Diumenge</th>
-	</tr>
-    <tr>
-    <?php          
     $diaSemana=date("w",mktime(0,0,0,$month,1,$year))+7;
     $ultimDiaMes=date("d",(mktime(0,0,0,$month+1,1,$year)-1));      
     $last_cell=$diaSemana+$ultimDiaMes;
