@@ -72,8 +72,8 @@
         success: function(response){
             let html = '<table>'+
                 '<thead>'+
-                '<tr><th colspan="4"><h1><?php echo $Text['nav_wiz'];?> ' + dataTorn + '</h1></th></tr>'+
-                '<tr><th><?php echo $Text['uf_short']?></th><th><?php echo $Text['uf_long']?></th><th><?php echo $Text['assignar_torn']?></th><th><?php echo $Text['guardar']?></th></tr>'; 
+                '<tr><th colspan="5"><h1><?php echo $Text['nav_wiz'];?> ' + dataTorn + '</h1></th></tr>'+
+                '<tr><th><?php echo $Text['uf_short']?></th><th><?php echo $Text['uf_long']?></th><th><?php echo $Text['assignar_torn']?></th><th><?php echo $Text['guardar']?></th><th><?php echo $Text['eliminar_uf']?></th></tr>'; 
             for(let i=0; i<response[0].length; i++){
                 html += '<tr>'+
                         '<th>' + response[0][i].id + '</th>'+
@@ -85,10 +85,21 @@
                          }
                         html += '</select></th>'+
                             '<th><button class="aix-layout-fixW150" id="btnGuardar" onclick="guardarTorn('+i+')"><?php echo $Text['guardar']?></button></th>'+
+                            '<th><button class="aix-layout-fixW150" id="btnEliminar" onclick="eliminarTorn('+response[0][i].id+')"><?php echo $Text['eliminar_uf']?></button></th>'+
                             '</tr>';
             }                
-                html += '</thead></table>';          
-                $('#contenidorTorn').html(html);
+            html += '<th>+</th>'+
+                    '<th><?php echo $Text['afegir_uf']?></th>'+
+                    '<th><select id="'+response[0].length+'" name="ufs">'+
+                    '<option value="" name="ufSeleccionada">...</option>';
+                    for(let x=0; x<response[1].length; x++){
+                       html += '<option value="'+response[1][x].id+' '+response[0][0].dataTorn+'" name="ufSeleccionada">' + response[1][x].nomSelect +'</option>';
+                    }
+            html+= '</select></th>'+
+                   '<th><button class="aix-layout-fixW150" id="btnGuardar" onclick="guardarTorn()"><?php echo $Text['afegir_uf']?></button></th>'+
+                   '<th></th>'+ 
+                   '</thead></table>';          
+            $('#contenidorTorn').html(html);
         }   
     });
  }
@@ -164,7 +175,7 @@
  }
 
  /* Funció per eliminar un Torn seleccionat */
- function eliminarTorn() {
+ function eliminarTorn(ufTorn) {
    $.showMsg({
         msg: "<?php echo $Text['pregunta_eliminar'];?>"+idData,
         buttons: {
@@ -172,7 +183,8 @@
             let dataTorn = idData.split("-").reverse().join("-");
             let parametres = {
                     oper : "eliminarTorn",
-                    data : dataTorn
+                    data : dataTorn,
+                    uf : ufTorn
             };
             $.ajax({
                     data:  parametres,

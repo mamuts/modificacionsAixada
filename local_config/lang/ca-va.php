@@ -138,6 +138,20 @@ $Text['eliminar_torn'] = "Eliminar torn";
 $Text['pregunta_eliminar'] = "Estàs segur d'eliminar el torn amb data: ";
 $Text['pregunta_roda'] ="Estàs segur de crear una roda de torns a partir de la data: ";
 $Text['pregunta_roda2'] = " Tots els torns posteriors seran eliminats";
+$Text['afegir_uf'] = "Afegir uf";
+$Text['eliminar_uf'] = "Eliminar uf";
+$Text['gener'] = "Gener";
+$Text['febrer'] = "Febrer";
+$Text['marc'] = "Març";
+$Text['abril'] = "Abril";
+$Text['maig'] = "Maig";
+$Text['juny'] = "Juny";
+$Text['juliol'] = "Juliol";
+$Text['agost'] = "Agost";
+$Text['setembre'] = "Setembre";
+$Text['octubre'] = "Octubre";
+$Text['novembre'] = "Novembre";
+$Text['desembre'] = "Desembre";
 
 /**
  * 				roles

@@ -5,12 +5,11 @@ require_once(__ROOT__ . "local_config/config.php");
    
 //Funció per imprimir el calendari
  function printCalendar($month, $year){
-
-    $meses=array(1=>"Gener", "Febrer", "Març", "Abril", "Maig", "Juny", "Juliol", "Agost", "Setembre", "Octubre", "Novembre", "Desembre");
+    $mesos=[1=>"Gener", "Febrer", "Març", "Abril", "Maig", "Juny", "Juliol", "Agost", "Setembre", "Octubre", "Novembre", "Desembre"];
     ?>
     <tr>
         <th><button class="aix-layout-fixW150" id="btnMesAnterior" onclick="mesAnterior(<?php echo $month;?>, <?php echo $year?>)">&lt;&lt;&lt;</button></th>
-        <th COLSPAN="5"><h1><?php echo $meses[$month]." ".$year?></h1></th>        
+        <th COLSPAN="5"><h1><?php echo $mesos[$month]." ".$year?></h1></th>        
         <th><button class="aix-layout-fixW150" id="btnMesPosterior" onclick="mesPosterior(<?php echo $month;?>, <?php echo $year?>)">>>></button></th>
     </tr>
 	<tr>

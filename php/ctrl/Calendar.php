@@ -85,7 +85,12 @@
 
         case 'eliminarTorn':
 	        $db = DBWrap::get_instance();
-            $db->Execute('delete from aixada_torns where dataTorn=:1q', $_POST['data']);
+            if(is_null($_POST['uf'])){
+                $db->Execute('delete from aixada_torns where dataTorn=:1q', $_POST['data']);
+            }
+            else{
+                $db->Execute('delete from aixada_torns where dataTorn=:1q and ufTorn=:2q', $_POST['data'], $_POST['uf']);                
+            }
             exit;
 
         case 'mesAnterior':
