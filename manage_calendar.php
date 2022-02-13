@@ -19,43 +19,23 @@
 <script>                  
  let idData;
                                        
- function selDataTorn(elem) {
+ function selData(elem, torn) {
 
- if(idData==null){
-    document.getElementById(elem.id).style.color='#7D7FF5';
-    idData=elem.id;
-    printTorn(idData);
- }
- else{
-    document.getElementById(idData).style.color='#000000';
-    document.getElementById(elem.id).style.color='#7D7FF5';
-    idData=elem.id;
-    printTorn(idData);
-    }
- btnEliminar.disabled = false; 
- btnCrear.disabled = true;
- btnRoda.disabled = true;     
- }
-
- function selDataNova(elem) {
- if(idData==null){
-    document.getElementById(elem.id).style.color='#7D7FF5';
-    idData=elem.id;
-    printCrearTorns(idData);
- }
- else{
-    document.getElementById(idData).style.color='#000000';
-    document.getElementById(elem.id).style.color='#7D7FF5';
-    idData=elem.id;
-    printCrearTorns(idData);
- }
- btnEliminar.disabled = true;
- btnCrear.disabled = false;
- btnRoda.disabled = false;  
+     if(idData!=null){
+        document.getElementById(idData).style.color='#000000';  
+     }
+     document.getElementById(elem.id).style.color='#7D7FF5';
+     idData=elem.id;
+     if(torn==0){
+         printCrearTorns(idData);
+     }
+     else{
+         printTorn(idData);
+     }   
  }
 
  /*Funció per mostrar un Torn selecionat*/
- function printTorn(dataTorn){    
+ function printTorn(dataTorn){   
 
     let parametres = {
         oper : "printTorn",
@@ -98,7 +78,8 @@
             html+= '</select></th>'+
                    '<th><button class="aix-layout-fixW150" id="btnGuardar" onclick="guardarTorn('+response[0].length+')"><?php echo $Text['afegir_uf']?></button></th>'+
                    '<th></th>'+ 
-                   '</thead></table>';          
+                   '</thead></table>'+
+                   '<br><button class="aix-layout-fixW150" id="btnEliminar" onclick="eliminarTorn()"><?php echo $Text['eliminar_torn'];?></button>';          
             $('#contenidorTorn').html(html);
         }   
     });
@@ -144,12 +125,15 @@
 
  /* Funció per imprimir crear un torn */
  function printCrearTorns(){
+   
     dataTorn = idData.split("-").reverse().join("-");
     let parametres = {
         oper : "printCrearTorns",
         data : dataTorn
     };
+
     document.getElementById("contenidorTorn").style.display = "block";
+
     $.ajax({
         data: parametres,
         url: 'php/ctrl/Calendar.php',
@@ -168,7 +152,9 @@
                 html+='</select></th>'+
                 '</tr>';
             }
-            html +='</table>';
+            html +='</table>'+
+            '<br><button class="aix-layout-fixW150" id="btnCrear" onclick="crearTorn()"><?php echo $Text['crear_torn'];?></button>'+
+            '<button class="aix-layout-fixW150" id="btnRoda" onclick="crearRodaTorns()"><?php echo $Text['crear_roda'];?></button>';
             $('#contenidorTorn').html(html);
             }   
     });
@@ -176,11 +162,11 @@
 
  /* Funció per eliminar un Torn seleccionat */
  function eliminarTorn(ufTorn) {
+   let dataTorn = idData.split("-").reverse().join("-"); 
    $.showMsg({
         msg: "<?php echo $Text['pregunta_eliminar'];?>"+idData,
         buttons: {
 		"<?=$Text['btn_ok'];?>":function(){
-            let dataTorn = idData.split("-").reverse().join("-");
             let parametres = {
                     oper : "eliminarTorn",
                     data : dataTorn,
@@ -192,21 +178,10 @@
                     type:  'post',
                     success:  function (response) {
                         $('#contenidorTorn').html("<h1><?php echo $Text['torn_eliminat'];?> ("+idData+")</h1>");
+                        let dataTorn = idData.split("-").reverse().join("-"); 
+                        actualitzaCalendari(dataTorn.split("-")[1], dataTorn.split("-")[0]);
                     }
             });
-            let parametresCalendari = {
-                oper : "actualitzarCalendari",
-                mes : dataTorn.split("-")[1],
-                any : dataTorn.split("-")[0],
-            };
-            $.ajax({
-                data:  parametresCalendari,
-                url:   'php/ctrl/Calendar.php',
-                type:  'post',
-                success:  function (response) {
-                    $('#contenidorCalendari').html(response);
-                }
-            });			
 			$(this).dialog("close");
 		},
 		"<?=$Text['btn_cancel'];?>" : function(){
@@ -236,21 +211,10 @@
         type: 'post',
         success:  function (response) {
            $('#contenidorTorn').html("<h1><?php echo $Text['torn_creat'];?> "+idData+"</h1>");
+           let dataTorn = idData.split("-").reverse().join("-"); 
+           actualitzaCalendari(dataTorn.split("-")[1], dataTorn.split("-")[0]); 
         }
     });
-    let parametresCalendari = {
-            oper : "actualitzarCalendari",
-            mes : dataTorn.split("-")[1],
-            any : dataTorn.split("-")[0],
-        };
-        $.ajax({
-                data:  parametresCalendari,
-                url:   'php/ctrl/Calendar.php',
-                type:  'post',
-                success:  function (response) {
-                    $('#contenidorCalendari').html(response);
-                }
-        });
  }
 
  /* Funció per crear roda de Torns */
@@ -270,20 +234,13 @@
                 type: 'post',
                 success:  function (response) {
                    $('#contenidorTorn').html("<h1><?php echo $Text['roda_torns_creada'];?></h1>");
-                }
-            });
-            let parametresCalendari = {
-                oper : "actualitzarCalendari",
-                mes : dataTorn.split("-")[1],
-                any : dataTorn.split("-")[0],
+                    let parametresCalendari = {
+                    oper : "actualitzarCalendari",
+                    mes : dataTorn.split("-")[1],
+                    any : dataTorn.split("-")[0],
             };
-            $.ajax({
-                    data:  parametresCalendari,
-                    url:   'php/ctrl/Calendar.php',
-                    type:  'post',
-                    success:  function (response) {
-                        $('#contenidorCalendari').html(response);
-                    }
+            actualitzaCalendari(dataTorn.split("-")[1], dataTorn.split("-")[0]);
+        }
             });
             $(this).dialog("close");
 		},
@@ -300,7 +257,7 @@
         if(month-1==0){month=12;year--;}
         else {month = month-1;}
     }
-    else{
+    else if(pos==1){
         if(month+1==13){month=1;year++;}
         else {month = month+1;}
     }
@@ -309,27 +266,44 @@
             mes : month,
             any : year,
         };    
-     document.getElementById("contenidorTorn").style.display = "none"; 
+
      $.ajax({
             data: parametres,
             url: 'php/ctrl/Calendar.php',
             type: 'post',
             success:  function (response) {
                 let mesos = ['','Gener', 'Febrer', 'Març', 'Abril', 'Maig', 'Juny', 'Juliol', 'Agost', 'Setembre', 'Octubre', 'Novembre', 'Desembre'];
-                let html = '<table>'+
-                '<tr>'+
+                let html = '<tr>'+
                 '<th><button class="aix-layout-fixW150" id="btnMesAnterior" onclick="mesCalendari('+month+','+year+',0)">&lt;&lt;&lt;</button></th>'+
                 '<th COLSPAN="5"><h1>'+mesos[month]+' '+year+'</h1></th>'+
                 '<th><button class="aix-layout-fixW150" id="btnMesPosterior" onclick="mesCalendari('+month+','+year+',1)">>>></button></th>'+
                 '</tr>'+
             	'<tr>'+
-        		'<th>Dilluns</th><th>Dimarts</th><th>Dimecres</th><th>Dijous</th><th>Divendres</th><th>Dissabte</th><th>Diumenge</th>'+
-                '</tr>'+
-                 '<tr>'+response;
-               $('#contenidorCalendari').html(html);
+        		'<th><?php echo $Text['dilluns'];?></th><th><?php echo $Text['dimarts'];?></th><th><?php echo $Text['dimecres'];?></th><th><?php echo $Text['dijous'];?></th><th><?php echo $Text['divendres'];?></th><th><?php echo $Text['dissabte'];?></th><th><?php echo $Text['diumenge'];?></th>'+
+                '</tr>';
+               $('#contenidorCapCalendari').html(html);
+               actualitzaCalendari(month, year);
+               document.getElementById("contenidorTorn").style.display = "none";
             }
         });
     idData = null;
+ }
+
+ /*Funció per actualitzar el calendari */
+ function actualitzaCalendari(month, year){
+    let parametres = {
+        oper : "actualitzarCalendari",
+        mes : month,
+        any : year,
+    };    
+    $.ajax({
+        data:  parametres,
+        url:   'php/ctrl/Calendar.php',
+        type:  'post',
+        success:  function (response) {
+        $('#contenidorCalendari').html(response);
+        }
+    });
  }
 </script>
 </head>
@@ -351,26 +325,17 @@
 		        <h1><?php echo $Text['head_ti_calendar']; ?></h1>	  	
 		    </div>		
 	    </div>
-    <table id=contenidorCalendari class="product_list">
-        <tr>
-            <th><button class="aix-layout-fixW150" id="btnMesAnterior" onclick="mesCalendari(<?php echo $month;?>, <?php echo $year;?>, 0)">&lt;&lt;&lt;</button></th>
-            <th COLSPAN="5"><h1><?php echo $mesos[$month]." ".$year?></h1></th>
-            <th><button class="aix-layout-fixW150" id="btnMesPosterior" onclick="mesCalendari(<?php echo $month?>,<?php echo $year?>, 1)">>>></button></th>
-        </tr>
-        <tr>
-            <th>Dilluns</th><th>Dimarts</th><th>Dimecres</th><th>Dijous</th><th>Divendres</th><th>Dissabte</th><th>Diumenge</th>
-	    </tr>
-        <tr>
-        <?php
-		printCalendar($month, $year);
-	    ?>
-    </table>
-<div id=contenidorTorn></div>
-<br>
-<button class="aix-layout-fixW150" id="btnEliminar" disabled="disabled" onclick="eliminarTorn()"><?php echo $Text['eliminar_torn'];?></button>
-<button class="aix-layout-fixW150" id="btnCrear" disabled="disabled" onclick="crearTorn()"><?php echo $Text['crear_torn'];?></button>
-<button class="aix-layout-fixW150" id="btnRoda" disabled="disabled" onclick="crearRodaTorns()"><?php echo $Text['crear_roda'];?></button>
-	</div>
+<table>
+    <thead id="contenidorCapCalendari">
+        <script>mesCalendari(<?php echo $month;?>,<?php echo $year;?>,2);</script>
+    </thead>
+    <tbody id="contenidorCalendari">
+        <?php printCalendar($month, $year);?>
+    </tbody>
+</table>
+
+<div id="contenidorTorn"></div>
+</div>
     
 	<!-- end of stage wrap -->
 </div>

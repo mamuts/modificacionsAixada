@@ -8,7 +8,7 @@ require_once(__ROOT__ . "local_config/config.php");
     $diaSemana=date("w",mktime(0,0,0,$month,1,$year))+7;
     $ultimDiaMes=date("d",(mktime(0,0,0,$month+1,1,$year)-1));      
     $last_cell=$diaSemana+$ultimDiaMes;
-		
+	echo "<tr>";
 		for($i=1;$i<=42;$i++){
 			if($i==$diaSemana){
 				$day=1;
@@ -25,7 +25,6 @@ require_once(__ROOT__ . "local_config/config.php");
 //Funció comprovar Torn
 function comprovarTorn($data){
 
-     global $dataTorns;
      $time = strtotime($data);
      $dataFormatada = date('Y-m-d',$time);
      $dia = date("d", $time);
@@ -35,11 +34,11 @@ function comprovarTorn($data){
      $row_cnt = $rs->num_rows; 
      if ($row_cnt>0) {
         array_push($dataTorns, $data);?>
-        <td id="<?php echo $data?>" onclick="selDataTorn(this)" style="background-color:red"><?php if($dataAvui==$dataFormatada){ echo "<b>".$dia."</b>";} else {echo $dia;}?></td>
+        <td id="<?php echo $data?>" onclick="selData(this, 1)" style="background-color:red"><?php if($dataAvui==$dataFormatada){ echo "<b>".$dia."</b>";} else {echo $dia;}?></td>
      <?php
      }
      else{?>
-        <td id="<?php echo $data?>" onclick="selDataNova(this)"><?php if($dataAvui==$dataFormatada){ echo "<b>".$dia."</b>";} else {echo $dia;}?></td>
+        <td id="<?php echo $data?>" onclick="selData(this, 0)" style="background-color:white"><?php if($dataAvui==$dataFormatada){ echo "<b>".$dia."</b>";} else {echo $dia;}?></td>
      <?php
      }
  }

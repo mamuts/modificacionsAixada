@@ -141,7 +141,13 @@ $Text['pregunta_roda2'] = " Tots els torns posteriors seran eliminats";
 $Text['afegir_uf'] = "Afegir uf";
 $Text['eliminar_uf'] = "Eliminar uf";
 $mesos=[1=>"Gener", "Febrer", "Març", "Abril", "Maig", "Juny", "Juliol", "Agost", "Setembre", "Octubre", "Novembre", "Desembre"];
-
+$Text['dilluns'] = "Dilluns";
+$Text['dimarts'] = "Dimarts";
+$Text['dimecres'] = "Dimecres";
+$Text['dijous'] = "Dijous";
+$Text['divendres'] = "Divendres";
+$Text['dissabte'] = "Dissabte";
+$Text['diumenge'] = "Diumenge";
 
 /**
  * 				roles

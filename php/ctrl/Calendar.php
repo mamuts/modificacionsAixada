@@ -96,6 +96,8 @@
             else{
                 $db->Execute('delete from aixada_torns where dataTorn=:1q and ufTorn=:2q', $_POST['data'], $_POST['uf']);                
             }
+            $a = explode('-',$_POST['data']);
+            printCalendar($a[0],$a[1]);
             exit;
 
         case 'mesCalendari':
@@ -103,6 +105,7 @@
             exit;
 
         case 'actualitzarCalendari':
+            echo $_POST['mes']." ".$_POST['any'];
             printCalendar($_POST['mes'], $_POST['any']);
             exit;
             
