@@ -325,7 +325,12 @@
 		        <h1><?php echo $Text['head_ti_calendar']; ?></h1>	  	
 		    </div>		
 	    </div>
-<table>
+<style>
+    .table { text-align: center;
+                width: 100%;
+              }
+</style>
+<table class="table">
     <thead id="contenidorCapCalendari">
         <script>mesCalendari(<?php echo $month;?>,<?php echo $year;?>,2);</script>
     </thead>
