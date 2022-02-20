@@ -2,9 +2,9 @@ $(function(){
 	
 	
 	$("#navHome").button();
-    $("#navCompra").button();	
+    $("#navShop").button();	
 	$("#navWizard").button();
-	$("#navShop").button();
+	$("#navAjuda").button();
 	$("#navOrder").button();
     
 	$("#navManage").button({

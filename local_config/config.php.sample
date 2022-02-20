@@ -383,7 +383,8 @@ class configuration_vars {
 
   public $menu_config 
       = array( 'Consumer' => 
-               array ( 
+               array (
+                      'navAjuda'     => 'enable',
                       'navHome'      => 'enable',
                       'navWizard'    => 'disable',
                       'navShop'      => 'enable',
@@ -394,6 +395,7 @@ class configuration_vars {
                        ),
                'Hacker Commission' =>
                array (
+                      'navAjuda'     => 'enable',
                       'navHome'      => 'enable',
                       'navWizard'    => 'enable',
                       'navShop'      => 'disable',
@@ -403,7 +405,8 @@ class configuration_vars {
                       'navIncidents' => 'enable' 
                       ),
                'Checkout' =>
-               array ( 
+               array (
+                      'navAjuda'     => 'enable', 
                       'navHome'      => 'enable',
                       'navWizard'    => 'enable',
                       'navShop'      => 'disable',
@@ -414,6 +417,7 @@ class configuration_vars {
                        ),               
                'Consumer Commission' => 
                array(
+                     'navAjuda'     => 'enable',
                      'navHome'      => 'enable',
                      'navWizard'    => 'disable',
                      'navShop'      => 'disable',
@@ -424,6 +428,7 @@ class configuration_vars {
                      ),
                'Econo-Legal Commission' => 
                array(
+                     'navAjuda'     => 'enable',
                      'navHome'      => 'enable',
                      'navWizard'    => 'disable',
                      'navShop'      => 'disable',
@@ -434,6 +439,7 @@ class configuration_vars {
                      ),
                'Logistic Commission' => 
                array(
+                     'navAjuda'     => 'enable',
                      'navHome'      => 'enable',
                      'navWizard'    => 'disable',
                      'navShop'      => 'disable',
@@ -444,6 +450,7 @@ class configuration_vars {
                      ),
                'Fifth Column Commission' => 
                array(
+                     'navAjuda'     => 'enable',
                      'navHome'      => 'enable',
                      'navWizard'    => 'disable',
                      'navShop'      => 'disable',
@@ -454,6 +461,7 @@ class configuration_vars {
                      ),
                'Producer' => 
                array(
+                     'navAjuda'     => 'enable',
                      'navHome'      => 'enable',
                      'navWizard'    => 'disable',
                      'navShop'      => 'disable',
