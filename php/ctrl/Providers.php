@@ -14,8 +14,8 @@ try{
     switch ($_REQUEST['oper']) {
 
 	       
-		case 'getProviders':
-			printXML(stored_query_XML_fields('get_provider_listing', get_param('provider_id',0), get_param('all',0)));
+        case 'getProviders': 
+            printXML(stored_query_XML_fields('get_provider_listing_resp_uf', get_param('provider_id',0), get_param('all',0), get_session_value('uf_id')*get_config('rights_on_all_providers')[get_current_role()]));
 			exit;
 
         case 'deactivateProvider':

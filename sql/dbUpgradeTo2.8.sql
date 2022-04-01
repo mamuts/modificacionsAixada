@@ -208,19 +208,6 @@ IF NOT EXISTS (
     '> CREATE table aixada_account_desc', '2.8');
 END IF;
 
-IF NOT EXISTS (
-    SELECT * FROM information_schema.tables where table_schema=DATABASE() and table_name='aixada_torns'
-) THEN
-    /**
-     * torns ufs
-     **/
-    create table aixada_torns (
-      id            int(11) not null auto_increment,
-      dataTorn      date    not null,
-      ufTorn        int(11) not null
-    ) engine=InnoDB default character set utf8 collate utf8_general_ci;
-END IF;
-
 IF EXISTS (
     SELECT * FROM information_schema.columns
     WHERE table_schema = DATABASE()
